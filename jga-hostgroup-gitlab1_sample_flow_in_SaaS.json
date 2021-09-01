@@ -1,0 +1,146 @@
+{
+  "jga-hostgroup-gitlab1" : {
+    "Type" : "Folder",
+    "BusinessFields" : [ {
+      "Usercode" : "jga"
+    } ],
+    "RunAs" : "ctmagent",
+    "ControlmServer" : "IN01",
+    "SiteStandard" : "SE Demo System Standard",
+    "SubApplication" : "jga-test1",
+    "CreatedBy" : "jgama@bmc.com",
+    "Description" : "Jobs Unix running on CTMH.chg2",
+    "Application" : "jga-test1",
+    "When" : {
+      "RuleBasedCalendars" : {
+        "Included" : [ "EVERYDAY" ],
+        "EVERYDAY" : {
+          "Type" : "Calendar:RuleBased",
+          "When" : {
+            "DaysRelation" : "OR",
+            "WeekDays" : [ "NONE" ],
+            "MonthDays" : [ "ALL" ]
+          }
+        }
+      }
+    },
+    "jga-testjob001" : {
+      "Type" : "Job:Command",
+      "SubApplication" : "jga_test",
+      "CreatedBy" : "jgama@bmc.com",
+      "Description" : "test",
+      "RunAs" : "ctmagent",
+      "Application" : "jga-test",
+      "Command" : "ls -l",
+      "Host" : "zzz-linux-agents",
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "ALL" ],
+        "DaysRelation" : "OR"
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob001-TO-jga-testJob002-267"
+        }, {
+          "Event" : "jga-testJob001-TO-jga-testJob003-267"
+        } ]
+      }
+    },
+    "jga-testjob002" : {
+      "Type" : "Job:Command",
+      "SubApplication" : "jga-test1",
+      "CreatedBy" : "jgama@bmc.com",
+      "RunAs" : "ctmagent",
+      "Application" : "jga-test1",
+      "Command" : "sleep 1",
+      "Host" : "zzz-linux-agents",
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "ALL" ],
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob001-TO-jga-testJob002-267"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob002-TO-jga-testJob004-267"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob001-TO-jga-testJob002-267"
+        } ]
+      }
+    },
+    "jga-testjob003" : {
+      "Type" : "Job:Command",
+      "SubApplication" : "jga-test1",
+      "CreatedBy" : "jgama@bmc.com",
+      "RunOnAllAgentsInGroup" : true,
+      "RunAs" : "ctmagent",
+      "Application" : "jga-test1",
+      "Command" : "hostname",
+      "Host" : "zzz-linux-agents",
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "ALL" ],
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob001-TO-jga-testJob003-267"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob003-TO-jga-testJob004-267"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob001-TO-jga-testJob003-267"
+        } ]
+      }
+    },
+    "jga-testjob004" : {
+      "Type" : "Job:Command",
+      "SubApplication" : "jga-test1",
+      "CreatedBy" : "jgama@bmc.com",
+      "RunAs" : "ctmagent",
+      "Application" : "jga-test1",
+      "Command" : "sleep 2",
+      "Host" : "zzz-linux-agents",
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "ALL" ],
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob002-TO-jga-testJob004-267"
+        }, {
+          "Event" : "jga-testJob003-TO-jga-testJob004-267"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "jga-testJob002-TO-jga-testJob004-267"
+        }, {
+          "Event" : "jga-testJob003-TO-jga-testJob004-267"
+        } ]
+      }
+    }
+  }
+}
