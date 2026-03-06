@@ -1,5 +1,5 @@
 {
-  "jga-hostgroup-gitlab1" : {
+  "jga-hostgroup-gitlab2" : {
     "Type" : "Folder",
     "BusinessFields" : [ {
       "Usercode" : "jga"
@@ -10,7 +10,7 @@
     "SubApplication" : "jga-test1",
     "CreatedBy" : "jgama@bmc.com",
     "Description" : "Jobs Unix running on CTMH.chg2",
-    "Application" : "jga-test1",
+    "Application" : "jga-test2",
     "When" : {
       "RuleBasedCalendars" : {
         "Included" : [ "EVERYDAY" ],
